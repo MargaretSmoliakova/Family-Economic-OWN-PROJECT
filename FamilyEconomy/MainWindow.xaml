@@ -1,0 +1,84 @@
+﻿<Window x:Class="FamilyEconomy.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FamilyEconomy"
+        mc:Ignorable="d"        
+        Title="Семейный Бюджет"
+        Height="473.734"
+        Width="682"
+        Language="ru-Ru"
+        ResizeMode="CanMinimize"        
+        WindowStartupLocation="CenterScreen" BorderBrush="#FF040404" Background="White" OpacityMask="#FFACE2C7" Icon="icon.ico">
+
+    <Window.Resources>
+        <ContextMenu x:Key="EditAndDelDataGrid">
+            <MenuItem Name="EditMenuItem" Header="редактировать" Click="EditMenuItem_Click"/>
+            <MenuItem Name="DeleteMenuItem" Header="удалить" Click="DeleteMenuItem_Click"/>
+        </ContextMenu>
+    </Window.Resources>
+    <Grid Margin="0,0,0,-7" UseLayoutRounding="False" Background="White" OpacityMask="White" ScrollViewer.VerticalScrollBarVisibility="Disabled" AutomationProperties.IsOffscreenBehavior="Onscreen">
+        <ComboBox x:Name="PermanentPricesComboBox" HorizontalAlignment="Left" Height="22" Margin="433,12,0,0" VerticalAlignment="Top" Padding="5, 2, 0, 0" Width="207" IsReadOnly="True" SelectedIndex="0" DropDownClosed="PermanentPricesComboBox_DropDownClosed" BorderBrush="#FF209C31">
+            <ComboBox.Background>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </ComboBox.Background>
+            <ComboBoxItem Content="Изменить постоянные расходы" Opacity="0.5" IsEnabled="False" BorderBrush="#FFCEFFE6"/>
+        </ComboBox>
+        <TextBox x:Name="DisappointmentTextBox" HorizontalAlignment="Left" Height="87" Margin="23,98,0,0" Padding="20" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Top" Width="229" FontSize="37" BorderBrush="#FF209C31" IsReadOnly="True" Focusable="False"/>
+        <Label x:Name="SpentTodayLabel" Content="Потрачено сегодня:" HorizontalAlignment="Left" Height="26" Margin="23,199,0,0" VerticalAlignment="Top" Width="130"/>
+        <TextBox x:Name="SpentMoneyTodayTextBox" HorizontalAlignment="Left" Height="19" Margin="177,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75" BorderBrush="#FF209C31" IsReadOnly="True" Focusable="False"/>
+        <Label x:Name="MarginMonthLabel" Content="Бюджета на месяц:" HorizontalAlignment="Left" Height="26" Margin="23,274,0,0" VerticalAlignment="Top" Width="130"/>
+        <Label x:Name="SalaryLabel" Content="З\п за месяц:" HorizontalAlignment="Left" Height="26" Margin="23,332,0,0" VerticalAlignment="Top" Width="130"/>
+        <Label x:Name="TodayLimitLabel" Content="лимит на сегодня:" HorizontalAlignment="Left" Margin="87,76,0,0" Padding ="0" VerticalAlignment="Top" Height="22" Width="102"/>
+        <TextBox x:Name="SpentTodayChangeTextBox" HorizontalAlignment="Left" Height="19" Margin="69,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75" PreviewKeyDown="SpentTodayChangeTextBox_PreviewKeyDown" MouseDoubleClick="SelectAddress" GotKeyboardFocus="SelectAddress" PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"/>
+        <TextBox x:Name="MarginMonthChangeTextBox" HorizontalAlignment="Left" Height="18" Margin="69,305,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75" PreviewKeyDown="MarginMonthChangeTextBox_PreviewKeyDown" MouseDoubleClick="SelectAddress" GotKeyboardFocus="SelectAddress" PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"/>
+        <TextBox x:Name="SalaryChangeTextBox" HorizontalAlignment="Left" Height="18" Margin="69,363,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75" PreviewKeyDown="SalaryChangeTextBox_PreviewKeyDown" MouseDoubleClick="SelectAddress" GotKeyboardFocus="SelectAddress" PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"/>
+        <TextBox x:Name="SalaryTextBox" HorizontalAlignment="Left" Height="18" Margin="177,363,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75" BorderBrush="#FF209C31" PreviewKeyDown="SalaryTextBox_PreviewKeyDown" MouseDoubleClick="SelectAddress" GotKeyboardFocus="SelectAddress" PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton" />
+        <TextBox x:Name="MarginMoneyMonthTextBox" HorizontalAlignment="Left" Height="18" Margin="177,305,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75" BorderBrush="#FF209C31" IsReadOnly="True" Focusable="False" TextChanged="MarginMoneyMonthTextBox_TextChanged"/>
+        <Label x:Name="CurrentDateLabel" Content="{Binding CurrentDateAndTime}" ContentStringFormat="{}{0:dd.MM.yyyy HH:mm:ss}"  HorizontalAlignment="Left" Margin="71,53,0,0" VerticalAlignment="Top" FontSize="14" IsManipulationEnabled="False" HorizontalContentAlignment="Center" RenderTransformOrigin="2,2.4" VerticalContentAlignment="Center" BorderBrush="#FF125EB9"/>
+        <Label x:Name="CurrentMonthLabel" Content="{Binding CurrentDateAndTime}" ContentStringFormat="{}{0:MMMM}" HorizontalAlignment="Left" Margin="433,39,0,0" VerticalAlignment="Top" Width="94" IsManipulationEnabled="False" FontSize="20"/>
+        <DataGrid x:Name="CostsDataGrid" AlternatingRowBackground="#FFDBFFB7" CanUserAddRows="False" HorizontalAlignment="Left" Margin="301,105,0,0" VerticalAlignment="Top" Height="260" Width="339" AutoGenerateColumns="False" MinColumnWidth="35" VerticalGridLinesBrush="#FFCEFFE6" HorizontalGridLinesBrush="#FF209C31" RowHeight="35" Foreground="Black" PreviewMouseRightButtonDown="CostsDataGrid_PreviewMouseRightButtonDown" Background="White" BorderBrush="{x:Null}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HeadersVisibility="Column" EnableRowVirtualization="False" HorizontalScrollBarVisibility="Disabled" >
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn  Header="сделано" Width="60" Binding="{Binding Check_box}" >
+                    <DataGridCheckBoxColumn.CellStyle>
+                        <Style>
+                            <EventSetter Event="CheckBox.Checked" Handler="OnChecked" />
+                            <EventSetter Event="CheckBox.Unchecked" Handler="OffChecked"/>
+                        </Style>
+                    </DataGridCheckBoxColumn.CellStyle>
+                </DataGridCheckBoxColumn>
+                <DataGridTextColumn Header="наименование расхода" Binding="{Binding Name}" Width="140" IsReadOnly="True"/>
+                <DataGridTextColumn Header="сумма" Binding="{Binding Price}" Width="60" IsReadOnly="True"/>
+                <DataGridCheckBoxColumn  Header="учтено" Width="80" Binding="{Binding Consideration}" >
+                    <DataGridCheckBoxColumn.CellStyle>
+                        <Style>
+                            <EventSetter Event="CheckBox.Checked" Handler="OnConsider" />
+                            <EventSetter Event="CheckBox.Unchecked" Handler="OffConsider"/>
+                        </Style>
+                    </DataGridCheckBoxColumn.CellStyle>
+                </DataGridCheckBoxColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="AddCostsButton" Content="добавить расход" HorizontalAlignment="Left" Margin="534,395,0,0" VerticalAlignment="Top" Width="106" Height="22" Click="AddCostsButton_Click" BorderBrush="#FF209C31" Background="White"/>
+        <Button x:Name="StartingDateButton" Content="дата начала месяца" HorizontalAlignment="Left" Margin="23,12,0,0" VerticalAlignment="Top" Width="121" Click="StartingDateButton_Click" Height="22" BorderBrush="#FF209C31" Background="White" UseLayoutRounding="False"/>
+        <Button x:Name="SpentTodayChangeMinusButton" Content="-" HorizontalAlignment="Left" Margin="43,230,0,0" VerticalAlignment="Top" Width="21" Padding="0,0,0,0" Click="SpentTodayChangeMinusButton_Click" Background="#FFDBFFB7" BorderBrush="#FFABADB3"/>
+        <Button x:Name="SpentTodayChangePlusButton" Content="+" HorizontalAlignment="Left" Margin="23,230,0,0" VerticalAlignment="Top" Width="21" Padding="0,0,0,0" Click="SpentTodayChangePlusButton_Click" BorderBrush="#FFABADB3" Background="White"/>
+        <Button x:Name="MarginMonthChangePlusButton" Content="+" HorizontalAlignment="Left" Margin="23,305,0,0" VerticalAlignment="Top" Width="21" Padding="0,0,0,0" Click="MarginMonthChangePlusButton_Click" BorderBrush="#FFABADB3" Background="White"/>
+        <Button x:Name="MarginMonthChangeMinusButton" Content="-" HorizontalAlignment="Left" Margin="43,305,0,0" VerticalAlignment="Top" Width="21" Padding="0,0,0,0" Click="MarginMonthChangeMinusButton_Click" BorderBrush="#FFABADB3" Background="#FFDBFFB7"/>
+        <Button x:Name="SalaryChangePlusButton" Content="+" HorizontalAlignment="Left" Margin="23,363,0,0" VerticalAlignment="Top" Width="21" Padding="0,0,0,0" Click="SalaryChangePlusButton_Click" BorderBrush="#FFABADB3" Background="White"/>
+        <Button x:Name="SalaryChangeMinusButton" Content="-" HorizontalAlignment="Left" Margin="43,363,0,0" VerticalAlignment="Top" Width="21" Padding="0,0,0,0" Click="SalaryChangeMinusButton_Click" BorderBrush="#FFABADB3" Background="#FFDBFFB7"/>
+        <Image x:Name="image1" HorizontalAlignment="Left" Height="29" Margin="149,229,0,0" VerticalAlignment="Top" Width="23" Source="images\arrow.png"/>
+        <Image x:Name="image2" HorizontalAlignment="Left" Height="29" Margin="149,303,0,0" VerticalAlignment="Top" Width="23" Source="images\arrow.png"/>
+        <Image x:Name="image3" HorizontalAlignment="Left" Height="29" Margin="149,361,0,0" VerticalAlignment="Top" Width="23" Source="images\arrow.png"/>
+        <Button x:Name="ShowAllCostsButton" Content="Все расходы" HorizontalAlignment="Left" Margin="301,83,0,0" VerticalAlignment="Top" Width="108" Click="ShowAllCostsButton_Click" BorderBrush="#FF209C31" Background="#FF7DAA73" BorderThickness="1,1,1,0"/>
+        <Button x:Name="ShowMonthlyCostsButton" Content="Разовые расходы" HorizontalAlignment="Left" Margin="409,83,0,0" VerticalAlignment="Top" Width="109" Click="ShowMonthlyCostsButton_Click" BorderBrush="#FF209C31" Background="White" BorderThickness="1,1,1,0"/>
+        <Button x:Name="ShowPermanentCostsButton" Content="Постоянные расходы" HorizontalAlignment="Left" Margin="518,83,0,0" VerticalAlignment="Top" Width="122" Click="ShowPermanentCostsButton_Click" BorderBrush="#FF209C31" Background="White" BorderThickness="1,1,1,0"/>
+
+
+
+    </Grid>
+</Window>

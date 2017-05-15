@@ -1,0 +1,98 @@
+﻿<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <edmx:DataServices m:DataServiceVersion="1.0" m:MaxDataServiceVersion="3.0" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+    <Schema Namespace="ClassLibraryEF" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <EntityType Name="CurrentPrice">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="Id_monthly_prices" Type="Edm.Int32" />
+        <Property Name="Id_permanent_prices" Type="Edm.Int32" />
+        <Property Name="Price" Type="Edm.String" MaxLength="20" FixedLength="false" Unicode="true" />
+        <Property Name="Check_box" Type="Edm.Int32" />
+        <Property Name="Consideration" Type="Edm.Int32" />
+        <NavigationProperty Name="MonthlyPrice" Relationship="ClassLibraryEF.MonthlyPrice_CurrentPrices" ToRole="MonthlyPrice_CurrentPrices_Source" FromRole="MonthlyPrice_CurrentPrices_Target" />
+        <NavigationProperty Name="PermanentPrice" Relationship="ClassLibraryEF.PermanentPrice_CurrentPrices" ToRole="PermanentPrice_CurrentPrices_Source" FromRole="PermanentPrice_CurrentPrices_Target" />
+      </EntityType>
+      <EntityType Name="MonthlyPrice">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        <Property Name="Group" Type="Edm.String" MaxLength="20" FixedLength="false" Unicode="true" />
+        <NavigationProperty Name="CurrentPrices" Relationship="ClassLibraryEF.MonthlyPrice_CurrentPrices" ToRole="MonthlyPrice_CurrentPrices_Target" FromRole="MonthlyPrice_CurrentPrices_Source" />
+      </EntityType>
+      <EntityType Name="PermanentPrice">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        <Property Name="Price" Type="Edm.String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+        <Property Name="Group" Type="Edm.String" MaxLength="20" FixedLength="false" Unicode="true" />
+        <NavigationProperty Name="CurrentPrices" Relationship="ClassLibraryEF.PermanentPrice_CurrentPrices" ToRole="PermanentPrice_CurrentPrices_Target" FromRole="PermanentPrice_CurrentPrices_Source" />
+      </EntityType>
+      <EntityType Name="UserData">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+        <Property Name="Value" Type="Edm.String" MaxLength="20" FixedLength="false" Unicode="true" />
+      </EntityType>
+      <EntityType Name="UserInfo">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="LoginName" Type="Edm.String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+        <Property Name="Mail" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="Password" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+      </EntityType>
+      <Association Name="MonthlyPrice_CurrentPrices">
+        <End Type="ClassLibraryEF.MonthlyPrice" Role="MonthlyPrice_CurrentPrices_Source" Multiplicity="0..1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="ClassLibraryEF.CurrentPrice" Role="MonthlyPrice_CurrentPrices_Target" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="MonthlyPrice_CurrentPrices_Source">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="MonthlyPrice_CurrentPrices_Target">
+            <PropertyRef Name="Id_monthly_prices" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="PermanentPrice_CurrentPrices">
+        <End Type="ClassLibraryEF.PermanentPrice" Role="PermanentPrice_CurrentPrices_Source" Multiplicity="0..1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="ClassLibraryEF.CurrentPrice" Role="PermanentPrice_CurrentPrices_Target" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="PermanentPrice_CurrentPrices_Source">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="PermanentPrice_CurrentPrices_Target">
+            <PropertyRef Name="Id_permanent_prices" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <EntityContainer Name="FamilyEconomicEntities" m:IsDefaultEntityContainer="true">
+        <EntitySet Name="CurrentPrices" EntityType="ClassLibraryEF.CurrentPrice" />
+        <EntitySet Name="MonthlyPrices" EntityType="ClassLibraryEF.MonthlyPrice" />
+        <EntitySet Name="PermanentPrices" EntityType="ClassLibraryEF.PermanentPrice" />
+        <EntitySet Name="UserDatas" EntityType="ClassLibraryEF.UserData" />
+        <EntitySet Name="UserInfoes" EntityType="ClassLibraryEF.UserInfo" />
+        <AssociationSet Name="MonthlyPrice_CurrentPrices" Association="ClassLibraryEF.MonthlyPrice_CurrentPrices">
+          <End Role="MonthlyPrice_CurrentPrices_Target" EntitySet="CurrentPrices" />
+          <End Role="MonthlyPrice_CurrentPrices_Source" EntitySet="MonthlyPrices" />
+        </AssociationSet>
+        <AssociationSet Name="PermanentPrice_CurrentPrices" Association="ClassLibraryEF.PermanentPrice_CurrentPrices">
+          <End Role="PermanentPrice_CurrentPrices_Target" EntitySet="CurrentPrices" />
+          <End Role="PermanentPrice_CurrentPrices_Source" EntitySet="PermanentPrices" />
+        </AssociationSet>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

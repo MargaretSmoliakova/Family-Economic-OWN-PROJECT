@@ -1,0 +1,26 @@
+﻿<Window x:Class="FamilyEconomy.StartingDateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FamilyEconomy"
+        mc:Ignorable="d"
+        Title="Дата начала месяца" Height="304" Width="284">
+    <Grid Margin="0,0,0,-1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <CheckBox x:Name="dependenceOnWeekendsCheckBox" Content="учитывать попадание на выходные дни" HorizontalAlignment="Left" Margin="15,201,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Width="246" Height="17" RenderTransformOrigin="0.5,0.5" Checked="DependenceOnWeekendsCheckBox_Checked" Unchecked="DependenceOnWeekendsCheckBox_Unchecked">
+            <CheckBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="-8.973"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="1.342"/>
+                </TransformGroup>
+            </CheckBox.RenderTransform>
+        </CheckBox>
+        <Calendar Name="datePicker" HorizontalAlignment="Left" Margin="48,24,0,0" VerticalAlignment="Top" Height="157" Width="174" FirstDayOfWeek="Monday" Grid.ColumnSpan="3" SelectedDatesChanged="datePicker_SelectedDateChanged" />
+        <Button x:Name="CloseButton" Content="Закрыть" HorizontalAlignment="Left" Margin="174,235,0,0" VerticalAlignment="Top" Width="75" Click="CloseButton_Click"/>
+    </Grid>
+</Window>

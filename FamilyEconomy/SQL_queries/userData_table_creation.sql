@@ -1,0 +1,6 @@
+﻿CREATE TABLE userData (
+	id INT IDENTITY(1,1) NOT NULL,
+	name NVARCHAR(20) NOT NULL,
+	[value] NVARCHAR(20) NULL,
+	CONSTRAINT prim_userData PRIMARY KEY CLUSTERED ([id] ASC) 
+);
